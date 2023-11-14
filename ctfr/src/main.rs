@@ -1,11 +1,22 @@
 use axum::{response::Html, routing::get, Router};
 use std::net::SocketAddr;
 
+const BANNER: &str = r#"
+ ██████╗████████╗███████╗
+██╔════╝╚══██╔══╝██╔════╝
+██║        ██║   █████╗  █████╗
+██║        ██║   ██╔══╝ ██╔═══╝
+╚██████╗   ██║   ██║    ██║
+ ╚═════╝   ╚═╝   ╚═╝    ╚═╝
+                 MNThomson
+"#;
+
 #[tokio::main]
 async fn main() {
     let app = Router::new().route("/", get(handler));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 4321));
+    println!("{}", BANNER);
     println!("listening on {}", addr);
 
     axum::Server::bind(&addr)

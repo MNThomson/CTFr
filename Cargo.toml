@@ -2,3 +2,4 @@
 resolver = "2"
 
 members = ["ctfr"]
+default-members = ["ctfr"]

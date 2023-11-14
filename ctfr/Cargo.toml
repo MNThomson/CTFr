@@ -2,6 +2,9 @@
 name = "ctfr"
 version = "0.1.0"
 edition = "2021"
+description = " Optimized CTFd written with Rust & HTMX "
+license = "GPL-3.0"
+homepage = "https://github.com/MNThomson/CTFr"
 
 [dependencies]
 axum = { version = "0.6" }
