@@ -11,3 +11,4 @@ axum = { version = "0.6" }
 tokio = { version = "1.34", features = ["full"] }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing = { version = "0.1", features = ["attributes"] }
+anyhow = "1.0.75"
