@@ -1,3 +1,4 @@
+mod db;
 mod http;
 mod telemetry;
 mod utils;
@@ -10,7 +11,11 @@ async fn main() -> anyhow::Result<()> {
 
     telemetry::init_telemetry();
 
-    http::serve().await?;
+    let db = db::init_dbpool().await?;
+
+    db::setup_database(&db).await;
+
+    http::serve(db).await?;
 
     Ok(())
 }

@@ -2,15 +2,21 @@ use std::net::SocketAddr;
 
 use anyhow::Context;
 use axum::Router;
+use sqlx::SqlitePool;
 use tracing::debug;
 
 mod index;
 
-pub async fn serve() -> anyhow::Result<()> {
-    let app = api_router();
+#[derive(Clone)]
+pub struct AppState {
+    db: SqlitePool,
+}
+
+pub async fn serve(db: SqlitePool) -> anyhow::Result<()> {
+    let app = api_router().with_state(AppState { db });
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 4321));
-    debug!("listening on {}", addr);
+    debug!("listening on http://{}", addr);
 
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
@@ -18,7 +24,6 @@ pub async fn serve() -> anyhow::Result<()> {
         .context("error running HTTP server")
 }
 
-fn api_router() -> Router {
+fn api_router() -> Router<AppState> {
     Router::new().merge(index::router())
-    // .merge(articles::router())
 }
