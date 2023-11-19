@@ -1,20 +1,19 @@
 use std::time::Duration;
 
 use anyhow::Context;
-use sqlx::{sqlite::SqlitePoolOptions, Pool, Sqlite};
+use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 use tracing::debug;
 
-pub async fn init_dbpool() -> anyhow::Result<Pool<Sqlite>> {
-    return Ok(SqlitePoolOptions::new()
+pub async fn init_dbpool() -> anyhow::Result<Pool<Postgres>> {
+    return Ok(PgPoolOptions::new()
         .max_connections(50)
         .acquire_timeout(Duration::from_secs(3))
-        // .connect("sqlite::memory:")
-        .connect("sqlite://sqlite.db")
+        .connect("postgres://user:pass@localhost/database")
         .await
         .context("Could not connect to database (with URL)")?);
 }
 
-pub async fn setup_database(db: &Pool<Sqlite>) {
+pub async fn setup_database(db: &Pool<Postgres>) {
     if cfg!(debug_assertions) {
         sqlx::query(include_str!("sql/1_setup.down.sql"))
             .execute(db)

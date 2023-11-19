@@ -2,17 +2,17 @@ use std::net::SocketAddr;
 
 use anyhow::Context;
 use axum::Router;
-use sqlx::SqlitePool;
+use sqlx::PgPool;
 use tracing::debug;
 
 mod index;
 
 #[derive(Clone)]
 pub struct AppState {
-    db: SqlitePool,
+    db: PgPool,
 }
 
-pub async fn serve(db: SqlitePool) -> anyhow::Result<()> {
+pub async fn serve(db: PgPool) -> anyhow::Result<()> {
     let app = api_router().with_state(AppState { db });
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 4321));
