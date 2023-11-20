@@ -1,1 +1,1 @@
-INSERT INTO users (user_id, username) VALUES( "1234-5678", "testuser");
+INSERT INTO users (user_id, username) VALUES ('5678', 'testuser');
