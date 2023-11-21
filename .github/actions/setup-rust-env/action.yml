@@ -15,4 +15,3 @@ runs:
 
     - name: Setup rust cache
       uses: Swatinem/rust-cache@v2
-
