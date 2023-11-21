@@ -9,7 +9,14 @@ homepage = "https://github.com/MNThomson/CTFr"
 [dependencies]
 axum = { version = "0.6" }
 tokio = { version = "1.34", features = ["full"] }
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-tracing = { version = "0.1", features = ["attributes"] }
 anyhow = "1.0.75"
 sqlx = { version = "0.7.2", features = ["postgres", "runtime-tokio-native-tls"] }
+
+# O11Y
+tracing = { version = "0.1", features = ["attributes"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+opentelemetry = { version = "0.21.0", features = ["metrics"] }
+opentelemetry_sdk = { version = "0.21.0", features = ["rt-tokio"] }
+opentelemetry-otlp = { version = "0.14.0", features = ["tonic", "metrics"] }
+tracing-opentelemetry = "0.22.0"
+tower-http = { version = "0.4.4", features = ["trace"] }

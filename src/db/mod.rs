@@ -1,16 +1,16 @@
 use std::time::Duration;
 
-use anyhow::Context;
+use anyhow::{Context, Result};
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 use tracing::debug;
 
-pub async fn init_dbpool() -> anyhow::Result<Pool<Postgres>> {
-    return Ok(PgPoolOptions::new()
+pub async fn init_dbpool() -> Result<Pool<Postgres>> {
+    return PgPoolOptions::new()
         .max_connections(50)
         .acquire_timeout(Duration::from_secs(3))
         .connect("postgres://user:pass@localhost/database")
         .await
-        .context("Could not connect to database (with URL)")?);
+        .context("Could not connect to database (with URL)");
 }
 
 pub async fn setup_database(db: &Pool<Postgres>) {

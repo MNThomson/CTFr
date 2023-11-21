@@ -1,8 +1,9 @@
-use super::AppState;
 use axum::{extract::State, response::Html, routing::get, Router};
 
+use super::AppState;
+
 pub fn router() -> Router<AppState> {
-    Router::new().route("/", get(handler))
+    return Router::new().route("/", get(handler));
 }
 
 async fn handler(State(state): State<AppState>) -> Html<&'static str> {
