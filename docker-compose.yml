@@ -14,8 +14,14 @@ services:
     ports:
       - 5432:5432
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
 
 volumes:
   postgresql_data:
     driver: local
-

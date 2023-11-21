@@ -1,3 +1,4 @@
 [alias]
 t = "nextest run"
 rr = "run --release"
+rs = "run --features sqlite --no-default-features"

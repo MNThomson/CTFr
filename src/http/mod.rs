@@ -7,18 +7,18 @@ use axum::{
     response::Response,
     Router,
 };
-use sqlx::PgPool;
 use tower_http::{classify::ServerErrorsFailureClass, trace::TraceLayer};
 use tracing::{debug, info, info_span, Span};
 
 mod index;
+use crate::db::DbPool;
 
 #[derive(Clone)]
 pub struct AppState {
-    db: PgPool,
+    db: DbPool,
 }
 
-pub async fn serve(db: PgPool) -> Result<()> {
+pub async fn serve(db: DbPool) -> Result<()> {
     let app = api_router().with_state(AppState { db }).layer(
         TraceLayer::new_for_http()
             .make_span_with(|request: &Request<_>| {
