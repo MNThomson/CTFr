@@ -2,7 +2,7 @@ use std::time::Duration;
 
 use anyhow::{Context, Result};
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
-use tracing::debug;
+use tracing::info;
 
 pub async fn init_dbpool() -> Result<Pool<Postgres>> {
     return PgPoolOptions::new()
@@ -33,5 +33,5 @@ pub async fn setup_database(db: &Pool<Postgres>) {
             .unwrap();
     }
 
-    debug!("database sucessfully setup");
+    info!("database sucessfully setup");
 }

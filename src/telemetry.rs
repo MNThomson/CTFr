@@ -20,7 +20,8 @@ pub fn init_telemetry() {
                             .with_endpoint("http://0.0.0.0:4317"),
                     )
                     .with_trace_config(sdktrace::config().with_resource(Resource::new(vec![
-                        KeyValue::new("ctfr.version", env!("CARGO_PKG_VERSION")),
+                        KeyValue::new("service.name", "ctfr"),
+                        KeyValue::new("service.version", env!("CARGO_PKG_VERSION")),
                     ])))
                     .install_batch(runtime::Tokio)
                     .unwrap(),

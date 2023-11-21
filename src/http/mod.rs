@@ -9,7 +9,7 @@ use axum::{
 };
 use sqlx::PgPool;
 use tower_http::{classify::ServerErrorsFailureClass, trace::TraceLayer};
-use tracing::{debug, info_span, Span};
+use tracing::{debug, info, info_span, Span};
 
 mod index;
 
@@ -24,7 +24,6 @@ pub async fn serve(db: PgPool) -> Result<()> {
             .make_span_with(|request: &Request<_>| {
                 return info_span!(
                     "http_request",
-                    "http.host" = "CTFr",
                     "http.request.method" = ?request.method(),
                     "http.request.route" = request.extensions().get::<MatchedPath>().map(MatchedPath::as_str),
                     "http.request.target" = request.uri().to_string(),
@@ -54,7 +53,7 @@ pub async fn serve(db: PgPool) -> Result<()> {
             ));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 4321));
-    debug!("listening on http://{}", addr);
+    info!("listening on http://{}", addr);
 
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
