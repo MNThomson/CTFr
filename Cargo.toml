@@ -18,6 +18,8 @@ lto = "fat"
 [dependencies]
 anyhow = { version = "1.0.75" }
 axum = { version = "0.6" }
+leptos = { version = "0.5.2", features = ["ssr"] }
+regex = { version = "1.10.2" }
 sqlx = { version = "0.7.2", features = ["runtime-tokio-native-tls"] }
 tokio = { version = "1.34", features = ["full"] }
 

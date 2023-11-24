@@ -11,6 +11,7 @@ use tower_http::{classify::ServerErrorsFailureClass, trace::TraceLayer};
 use tracing::{debug, info, info_span, Span};
 
 mod index;
+mod components;
 use crate::db::DbPool;
 
 #[derive(Clone)]
