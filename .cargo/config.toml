@@ -5,11 +5,3 @@ rr = ["watch", "-c", "-x", "run --release"]
 rp = ["watch", "-c", "-x", "run --features sqlite --no-default-features"]
 rs = ["watch", "-c", "-x", "run --features sqlite --no-default-features"]
 c = ["watch", "-c", "-x", "clippy --all-targets"]
-
-[target.x86_64-unknown-linux-gnu]
-rustflags = ["-C", "link-arg=-fuse-ld=mold"]
-
-[unstable]
-codegen-backend = true
-[profile.dev]
-codegen-backend = "cranelift"
