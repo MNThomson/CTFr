@@ -17,13 +17,10 @@ sqlite = ["sqlx/sqlite"]
 codegen-units = 1
 lto = "fat"
 
-[profile.dev]
+[profile.dev-fast]
+inherits = "dev"
 codegen-backend = "cranelift"
 rustflags = ["-C", "link-arg=-fuse-ld=mold"]
-
-[profile.test]
-codegen-backend = "llvm"
-rustflags = []
 
 [dependencies]
 anyhow = { version = "1.0.75" }

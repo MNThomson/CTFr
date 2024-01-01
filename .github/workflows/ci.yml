@@ -42,4 +42,4 @@ jobs:
         uses: "./.github/actions/setup-rust-env"
 
       - name: Rust test
-        run: cargo test --workspace
+        run: cargo test

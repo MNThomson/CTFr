@@ -1,7 +1,7 @@
 [alias]
 t = "nextest run"
 r = "rp"
+rp = ["watch", "-c", "-x", "run --profile dev-fast"]
+rs = ["watch", "-c", "-x", "run --profile dev-fast --features sqlite --no-default-features"]
 rr = ["watch", "-c", "-x", "run --release"]
-rp = ["watch", "-c", "-x", "run --features sqlite --no-default-features"]
-rs = ["watch", "-c", "-x", "run --features sqlite --no-default-features"]
 c = ["watch", "-c", "-x", "clippy --all-targets"]
