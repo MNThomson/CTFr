@@ -15,7 +15,8 @@ async fn handler(State(state): State<AppState>) -> impl IntoResponse {
     let h = htmlify(|| {
         view! {
         <Layout>
-            <div hx-get="/">Click Me!</div>
+            <h1 class="text-8xl font-bold text-center text-accent">CTFr</h1>
+            <p>An optimized CTF platoform written with Rust & HTMX</p>
         </Layout>
         }
     });
