@@ -10,8 +10,9 @@ use axum::{
 use tower_http::{classify::ServerErrorsFailureClass, trace::TraceLayer};
 use tracing::{debug, info, info_span, Span};
 
-mod index;
 mod components;
+mod index;
+mod staticfiles;
 use crate::db::DbPool;
 
 #[derive(Clone)]
@@ -39,7 +40,7 @@ pub async fn serve(db: DbPool) -> Result<()> {
                     "http.request.content_length" = tracing::field::Empty, // TODO: Add content length value
                     "http.response.status_code" = tracing::field::Empty,
                     "error" = tracing::field::Empty,
-                )
+                );
             })
             .on_request(|_request: &Request<_>, _span: &Span| {})
             .on_response(|_response: &Response, _latency: Duration, _span: &Span| {
@@ -51,7 +52,8 @@ pub async fn serve(db: DbPool) -> Result<()> {
                     _span.record("error", _error.to_string());
                     debug!("Request errored");
                 },
-            ));
+            ),
+    );
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 4321));
     info!("listening on http://{}", addr);
@@ -63,5 +65,7 @@ pub async fn serve(db: DbPool) -> Result<()> {
 }
 
 fn api_router() -> Router<AppState> {
-    return Router::new().merge(index::router());
+    return Router::new()
+        .merge(index::router())
+        .merge(staticfiles::router());
 }
