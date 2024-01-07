@@ -96,7 +96,7 @@ tailwind.config = {
 #[component]
 fn NavLink(#[prop(into)] title: String, #[prop(into)] url: String) -> impl IntoView {
     return view! {
-        <a href={url} class="text-gray-400 hover:text-gray-900">{title}</a>
+        <a href={url} class="text-gray-300 hover:text-gray-100">{title}</a>
     };
 }
 
