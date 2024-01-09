@@ -24,13 +24,18 @@ rustflags = ["-C", "link-arg=-fuse-ld=mold"]
 
 [dependencies]
 anyhow = { version = "1.0.75" }
-axum = { version = "0.6" }
+axum = { version = "0.7" }
 leptos = { version = "0.5.4", features = ["ssr"] }
 sqlx = { version = "0.7.2", features = [
     "runtime-tokio-native-tls",
 ] } #offline feature
 tokio = { version = "1.34", features = ["full"] }
-tower-http = { version = "0.4.4", features = ["trace", "fs"] }
+tower-http = { version = "0.5", features = ["trace", "fs"] }
+rust-embed = { version = "8.1.0", features = ["axum", "mime_guess"] }
+mime_guess = "2.0.4"
+rustc_version = "0.4.0"
+gethostname = "0.4.3"
+minify-html = "0.15.0"
 
 # O11Y
 opentelemetry = { version = "0.21.0", features = ["metrics"] }
@@ -39,11 +44,8 @@ opentelemetry-otlp = { version = "0.14.0", features = ["tonic", "metrics"] }
 tracing = { version = "0.1", features = ["attributes"] }
 tracing-opentelemetry = { version = "0.22.0" }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-rust-embed = { version = "8.1.0", features = ["axum", "mime_guess"] }
-mime_guess = "2.0.4"
-rustc_version = "0.4.0"
-gethostname = "0.4.3"
-minify-html = "0.15.0"
+
+# Misc
 
 [build-dependencies]
 rusqlite = "0.29.0"
