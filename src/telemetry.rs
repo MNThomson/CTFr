@@ -7,7 +7,7 @@ pub fn init_telemetry() {
     tracing_subscriber::registry()
         .with(
             tracing_subscriber::EnvFilter::try_from_default_env()
-                .unwrap_or_else(|_| return "ctfr=debug,axum::rejection=trace,sqlx=trace".into()),
+                .unwrap_or_else(|_| return "ctfr=debug,axum::rejection=trace".into()),
         )
         .with(tracing_subscriber::fmt::layer())
         .with(

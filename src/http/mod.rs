@@ -3,7 +3,7 @@ use std::{net::SocketAddr, time::Duration};
 use anyhow::{Context, Result};
 use axum::{
     extract::MatchedPath,
-    http::{Request, Version},
+    http::{header, Request, Version},
     response::Response,
     Router,
 };
