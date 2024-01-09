@@ -27,19 +27,25 @@ pub async fn serve(db: DbPool) -> Result<()> {
                 return info_span!(
                     "http_request",
                     "http.request.method" = ?request.method(),
-                    "http.request.route" = request.extensions().get::<MatchedPath>().map(MatchedPath::as_str),
-                    "http.request.target" = request.uri().to_string(),
+                    "http.route" = request
+                        .extensions()
+                        .get::<MatchedPath>()
+                        .map(MatchedPath::as_str),
+                    "url.path" = request.uri().path(),
+                    "url.query" = request.uri().query(),
+                    //"url.query" = request.uri().scheme().unwrap_or().as_str(),
+                    "user_agent.original" = request.headers().get(header::USER_AGENT).and_then(|val| val.to_str().ok()),
                     "http.flavor" = match request.version() {
-                        Version::HTTP_09 => "0.9".to_string(),
-                        Version::HTTP_10 => "1.0".to_string(),
-                        Version::HTTP_11 => "1.1".to_string(),
-                        Version::HTTP_2 => "2.0".to_string(),
-                        Version::HTTP_3 => "3.0".to_string(),
-                        _ => "Unknown".to_string(),
+                        Version::HTTP_09 => "0.9",
+                        Version::HTTP_10 => "1.0",
+                        Version::HTTP_11 => "1.1",
+                        Version::HTTP_2 => "2.0",
+                        Version::HTTP_3 => "3.0",
+                        _ => "Unknown",
                     },
-                    "http.request.content_length" = tracing::field::Empty, // TODO: Add content length value
+                    "http.request.content_length" = request.headers().get(header::CONTENT_LENGTH).and_then(|val| val.to_str().ok()),
                     "http.response.status_code" = tracing::field::Empty,
-                    "error" = tracing::field::Empty,
+                    "error.type" = tracing::field::Empty,
                 );
             })
             .on_request(|_request: &Request<_>, _span: &Span| {})
@@ -49,7 +55,7 @@ pub async fn serve(db: DbPool) -> Result<()> {
             })
             .on_failure(
                 |_error: ServerErrorsFailureClass, _latency: Duration, _span: &Span| {
-                    _span.record("error", _error.to_string());
+                    _span.record("error.type", _error.to_string());
                     debug!("Request errored");
                 },
             ),
