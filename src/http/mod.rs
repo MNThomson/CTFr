@@ -65,7 +65,7 @@ pub async fn serve(db: DbPool) -> Result<()> {
     let listener = TcpListener::bind("127.0.0.1:4321").await.unwrap();
     info!("listening on {}", listener.local_addr().unwrap());
 
-    axum::serve(listener, app.into_make_service())
+    axum::serve(listener, app)
         .await
         .context("error running HTTP server")
 }

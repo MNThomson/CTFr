@@ -4,7 +4,7 @@ use axum::{extract::State, routing::get, Router};
 use leptos::*;
 
 use super::components::htmlify;
-use super::components::layout::Layout;
+use super::components::{countdown::Countdown, layout::Layout};
 use super::AppState;
 
 pub fn router() -> Router<AppState> {
