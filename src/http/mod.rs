@@ -8,7 +8,9 @@ use axum::{
     Router,
 };
 use tokio::net::TcpListener;
-use tower_http::{classify::ServerErrorsFailureClass, trace::TraceLayer};
+use tower_http::{
+    catch_panic::CatchPanicLayer, classify::ServerErrorsFailureClass, trace::TraceLayer,
+};
 use tracing::{debug, info, info_span, Span};
 
 mod components;
@@ -73,5 +75,6 @@ pub async fn serve(db: DbPool) -> Result<()> {
 fn api_router() -> Router<AppState> {
     return Router::new()
         .merge(index::router())
-        .merge(staticfiles::router());
+        .merge(staticfiles::router())
+        .layer(CatchPanicLayer::new());
 }
